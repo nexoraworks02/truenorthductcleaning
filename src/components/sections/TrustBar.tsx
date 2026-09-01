@@ -22,14 +22,14 @@ const items = [
 
 export function TrustBar() {
   return (
-    <section className="border-b-2 border-teal-100 bg-white">
-      <Container className="grid gap-5 py-10 sm:grid-cols-3">
+    <section className="bg-canvas">
+      <Container className="grid gap-5 pt-10 pb-2 sm:grid-cols-3">
         {items.map((it, i) => {
           const Icon = it.icon;
           return (
             <Reveal key={it.title} delay={i * 0.1}>
-              <div className="flex items-start gap-4 rounded-lg border-l-4 border-[#0b57c2] bg-slate-50 p-5 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[#0b57c2] text-white shadow-md">
+              <div className="flex items-start gap-4 rounded-xl border border-line bg-white p-5 shadow-[0_12px_34px_-22px_rgba(10,35,64,0.4)] transition-transform hover:-translate-y-0.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#0b57c2] text-white shadow-sm">
                   <Icon className="h-6 w-6" />
                 </div>
                 <div>
