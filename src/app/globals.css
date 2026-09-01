@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------
+   TrueNorth Duct Cleaning — LIGHT + NAVY-BLUE, clean & trustworthy.
+   Light base (white / cool-grey) with deep navy-blue bands, brand-blue +
+   slate-grey accents (matches the TrueNorth logo). Big type, chunky solid
+   cards, hard edges. Tokens keep their teal-* / mint-* names so
+   components re-skin from here (teal-* = brand-blue scale, mint-* =
+   slate-grey accent). Navy bands use the navy/midnight tokens + white text.
+   ---------------------------------------------------------------- */
+@theme {
+  /* Brand-blue scale (primary) — sampled from the TrueNorth logo
+     (royal blue: wordmark #0553bd, wave #0869d2). */
+  --color-teal-50: #eef5fd; /* light blue fill (chips on light) */
+  --color-teal-100: #d7e8fb;
+  --color-teal-200: #bcd8f7; /* light borders */
+  --color-teal-300: #7db4ee;
+  --color-teal-400: #2e86e6; /* bright brand blue */
+  --color-teal-500: #0869d2; /* logo wave blue */
+  --color-teal-600: #0b57c2; /* primary text/solid on light */
+  --color-teal-700: #0a3f8f; /* deep accent text on light */
+  --color-teal-800: #0a2f6b; /* deepest blue */
+
+  /* Slate-grey accent (the logo's maple-leaf grey #7d828a). */
+  --color-mint-400: #6b7280; /* slate text on light */
+  --color-mint-500: #9aa1ab; /* slate accent */
+  --color-mint-600: #cbd5e1; /* light slate accent on dark */
+
+  /* Text & surfaces — LIGHT base */
+  --color-ink: #1e293b; /* headings (slate-ink) */
+  --color-ink-soft: #51607a; /* body text */
+  --color-canvas: #f6f8fb; /* page background (cool white) */
+  --color-surface: #ffffff; /* cards */
+  --color-line: #dde5ef; /* borders on light */
+
+  /* Navy-blue tokens (dark bands) */
+  --color-navy: #0f2a47;
+  --color-midnight: #14395f;
+  --color-air: #0b57c2;
+  --color-cyan: #0869d2; /* focus/accent */
+  --color-ice: #ffffff;
+  --color-muted: #64748b;
+  --color-success: #16a34a;
+
+  /* Semantic aliases */
+  --color-background: var(--color-canvas);
+  --color-foreground: var(--color-ink);
+  --color-primary: var(--color-air);
+  --color-accent: var(--color-teal-400);
+
+  /* Fonts (wired up in layout.tsx) */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-poppins);
+
+  /* Radius & industrial shadows */
+  --radius-card: 1rem;
+  --shadow-soft: 0 16px 40px -24px rgb(0 0 0 / 0.28);
+  --shadow-hard: 6px 6px 0 0 rgb(23 23 23 / 0.9);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* Dark-themed scope for content subpages (services / service areas / 404).
+   Redefines the surface + text tokens to the navy palette so token-based
+   utilities (text-ink, bg-surface, border-line, …) render on dark. */
+.theme-dark {
+  --color-ink: #ffffff;
+  --color-ink-soft: #d9e2ef;
+  --color-canvas: #0f2a47;
+  --color-surface: #14395f;
+  --color-line: #2c4a6e;
+  --color-teal-600: #3f95ec;
+  --color-teal-700: #6fb0f2;
+  --color-mint-400: #9aa1ab;
+  --color-mint-500: #cbd5e1;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+/* Bold, tight industrial headings. */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.03em;
+}
+
+/* Small uppercase industrial eyebrow label. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Slanted section divider (industrial). Put on a full-bleed wrapper. */
+.slant-top {
+  clip-path: polygon(0 3vw, 100% 0, 100% 100%, 0 100%);
+}
+.slant-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vw), 0 100%);
+}
+
+/* Primary button: animated shine sweep on hover. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-130%);
+}
+.btn-primary:hover::after {
+  animation: btn-shine 0.85s ease;
+}
+@keyframes btn-shine {
+  to {
+    transform: translateX(130%);
+  }
+}
+
+/* WhatsApp floating button — gentle bounce + ripple ring (CSS only) */
+@keyframes wa-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes wa-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+::selection {
+  background: var(--color-teal-600);
+  color: #ffffff;
+}
+
+/* Restrained dotted decoration for the hero collage (tiny off-white dots). */
+.hero-dots {
+  background-image: radial-gradient(currentColor 1px, transparent 1.4px);
+  background-size: 15px 15px;
+}
+
+/* Hero circular-image collage. Sizes and positions live on one wrapper so the
+   three circles move as a single editorial cluster across desktop heights. */
+.hero-media-cluster {
+  --hero-circle-top: clamp(196px, 15vw, 210px);
+  --hero-circle-main: clamp(232px, 18vw, 252px);
+  --hero-circle-bottom: clamp(212px, 16.5vw, 230px);
+  position: relative;
+  width: min(100%, 640px);
+  height: clamp(500px, 42vw, 582px);
+  margin-left: auto;
+  transform: translateY(-14px);
+}
+.hero-circle-top {
+  right: clamp(120px, 13vw, 180px);
+  top: clamp(16px, 3vw, 26px);
+}
+.hero-circle-main {
+  left: clamp(16px, 2.5vw, 32px);
+  top: clamp(150px, 13vw, 172px);
+}
+.hero-circle-bottom {
+  right: clamp(96px, 10vw, 132px);
+  bottom: clamp(14px, 2vw, 22px);
+}
+
+.hero-mobile-media-cluster {
+  --hero-mobile-main: clamp(190px, 58vw, 244px);
+  --hero-mobile-top: clamp(132px, 39vw, 170px);
+  --hero-mobile-bottom: clamp(145px, 43vw, 184px);
+  height: clamp(330px, 88vw, 400px);
+}
+.hero-mobile-circle-main {
+  left: calc(50% - (var(--hero-mobile-main) / 2));
+  top: -48px;
+}
+.hero-mobile-circle-top {
+  right: clamp(22px, 8vw, 52px);
+  top: clamp(145px, 42vw, 184px);
+}
+.hero-mobile-circle-bottom {
+  left: clamp(18px, 8vw, 54px);
+  bottom: 0;
+}
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .hero-media-cluster {
+    --hero-circle-top: clamp(172px, 13vw, 200px);
+    --hero-circle-main: clamp(206px, 15.5vw, 238px);
+    --hero-circle-bottom: clamp(188px, 14vw, 218px);
+    height: clamp(430px, 34vw, 480px);
+    transform: translateY(-8px);
+  }
+  .hero-circle-main {
+    top: clamp(118px, 11vw, 144px);
+  }
+}
+
+/* ----------------------------------------------------------------
+   HERO — 3D "duct tunnel" airflow. Concentric rounded rings recede in
+   perspective and fly toward the viewer, creating the sensation of
+   gliding through a clean duct. Pure CSS, GPU-friendly, no JS.
+   ---------------------------------------------------------------- */
+.duct-scene {
+  perspective: 640px;
+  perspective-origin: 50% 46%;
+  transform-style: preserve-3d;
+}
+.duct-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130vmax;
+  height: 130vmax;
+  margin: -65vmax 0 0 -65vmax;
+  border-radius: 22%;
+  border: 2px solid rgba(127, 178, 227, 0.26);
+  box-shadow:
+    inset 0 0 90px rgba(46, 134, 208, 0.18),
+    0 0 60px rgba(46, 134, 208, 0.08);
+  opacity: 0;
+  transform: translateZ(-1700px);
+  animation: duct-fly 9s linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes duct-fly {
+  0% {
+    transform: translateZ(-1700px) rotate(0deg);
+    opacity: 0;
+  }
+  14% {
+    opacity: 0.75;
+  }
+  82% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateZ(180px) rotate(10deg);
+    opacity: 0;
+  }
+}
+/* Slow parallax drift of the whole tunnel for extra depth. */
+.duct-drift {
+  animation: duct-drift 16s ease-in-out infinite alternate;
+}
+@keyframes duct-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(1.5%, 1%, 0) scale(1.05);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .duct-ring {
+    animation: none;
+    opacity: 0.22;
+  }
+  .duct-ring:nth-child(n + 4) {
+    display: none;
+  }
+  .duct-drift {
+    animation: none;
+  }
+}
