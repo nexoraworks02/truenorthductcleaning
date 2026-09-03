@@ -92,7 +92,7 @@ export function AirJourney() {
         className="hero-dots pointer-events-none absolute right-[6%] top-[16%] hidden h-40 w-40 text-white/40 opacity-[0.14] lg:block"
       />
 
-      <Container className="grid min-h-[inherit] items-center gap-8 pt-28 pb-12 sm:pt-32 sm:pb-14 lg:grid-cols-[minmax(0,45%)_minmax(0,55%)] lg:gap-4">
+      <Container className="grid min-h-[inherit] items-center gap-5 pb-24 pt-24 sm:gap-8 sm:pb-14 sm:pt-32 lg:grid-cols-[minmax(0,45%)_minmax(0,55%)] lg:gap-4">
         {/* ------------------------------- LEFT: the offer ------------------------------- */}
         <motion.div style={{ y: contentY }} className="max-w-xl">
           <motion.span
@@ -109,7 +109,7 @@ export function AirJourney() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08 }}
-            className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.4rem]"
+            className="mt-4 font-display text-[2.55rem] font-bold leading-[1.04] tracking-tight sm:text-5xl lg:text-[3.4rem]"
           >
             Cleaner ducts.
             <br />
@@ -120,7 +120,7 @@ export function AirJourney() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.16 }}
-            className="mt-5 max-w-lg text-base leading-relaxed text-white/85 sm:text-lg"
+            className="mt-4 max-w-lg text-[15px] leading-relaxed text-white/85 sm:mt-5 sm:text-lg"
           >
             Certified air duct, furnace, AC &amp; dryer vent cleaning across six
             provinces. Transparent pricing, no surprises — just fresh, healthy
@@ -132,7 +132,7 @@ export function AirJourney() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.24 }}
-            className="mt-6 grid max-w-md grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2"
+            className="mt-5 grid max-w-md grid-cols-1 gap-x-6 gap-y-2 sm:mt-6 sm:grid-cols-2 sm:gap-y-2.5"
           >
             {services.map((s) => (
               <li key={s.slug} className="flex items-center gap-2.5 text-sm text-white/90">
@@ -148,7 +148,7 @@ export function AirJourney() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.32 }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center"
           >
             <Button href="/#quote" size="lg">
               Get Free Quote
@@ -197,35 +197,38 @@ export function AirJourney() {
           />
         </div>
 
-        {/* ---------------------- RIGHT/BELOW: compact cluster (mobile + tablet) ---------------------- */}
+        {/* ---------------------- RIGHT/BELOW: horizontal 3-circle arc (mobile + tablet) ---------------------- */}
         <div className="hero-mobile-media-cluster relative mx-auto w-full max-w-[420px] lg:hidden">
+          {/* Left — round brush */}
           <HeroVideoBubble
             poster={circles.brush.poster}
             videoSrc={src(circles.brush.video)}
             label={circles.brush.label}
+            size="var(--hero-mobile-side)"
+            className="hero-mobile-circle-left"
+            z={20}
+            delay={0.22}
+            float={[2, 9]}
+          />
+          {/* Centre — vent register (largest, raised) */}
+          <HeroVideoBubble
+            poster={circles.inspection.poster}
+            videoSrc={src(circles.inspection.video)}
+            label={circles.inspection.label}
             size="var(--hero-mobile-main)"
             className="hero-mobile-circle-main"
             z={30}
             delay={0.1}
             float={[3, 8]}
           />
-          <HeroVideoBubble
-            poster={circles.inspection.poster}
-            videoSrc={src(circles.inspection.video)}
-            label={circles.inspection.label}
-            size="var(--hero-mobile-top)"
-            className="hero-mobile-circle-top"
-            z={20}
-            delay={0.22}
-            float={[2, 9]}
-          />
+          {/* Right — vacuum extraction */}
           <HeroVideoBubble
             poster={circles.extraction.poster}
             videoSrc={src(circles.extraction.video)}
             label={circles.extraction.label}
-            size="var(--hero-mobile-bottom)"
-            className="hero-mobile-circle-bottom"
-            z={25}
+            size="var(--hero-mobile-side)"
+            className="hero-mobile-circle-right"
+            z={20}
             delay={0.34}
             float={[2, 10]}
           />

@@ -14,7 +14,10 @@ export function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={cn("py-20 sm:py-28 scroll-mt-24", className)}>
+    <section
+      id={id}
+      className={cn("py-14 scroll-mt-24 sm:py-24 lg:py-28", className)}
+    >
       <Container className={containerClassName}>{children}</Container>
     </section>
   );
@@ -58,7 +61,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl",
+          "font-display text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl",
           dark ? "text-white" : "text-ink"
         )}
       >
@@ -67,7 +70,7 @@ export function SectionHeading({
       {subtitle && (
         <p
           className={cn(
-            "mt-5 text-lg leading-relaxed sm:text-xl",
+            "mt-4 text-base leading-relaxed sm:mt-5 sm:text-xl",
             dark ? "text-slate-300" : "text-ink-soft"
           )}
         >

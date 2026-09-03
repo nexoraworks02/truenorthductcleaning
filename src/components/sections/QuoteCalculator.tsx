@@ -80,11 +80,53 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
 }
 
+// Fields that get inline validation (province always has a default, so it's
+// never "missing"). Order here = order we scroll to the first problem.
+type FieldName = "firstName" | "phone" | "email" | "address" | "date" | "time";
+type FieldErrors = Partial<Record<FieldName, string>>;
+const FIELD_ORDER: FieldName[] = [
+  "firstName",
+  "phone",
+  "email",
+  "address",
+  "date",
+  "time",
+];
+
+function validateForm(form: {
+  firstName: string;
+  phone: string;
+  email: string;
+  address: string;
+  date: string;
+  time: string;
+}): FieldErrors {
+  const e: FieldErrors = {};
+  if (!form.firstName.trim()) e.firstName = "Please enter your first name.";
+  if (!form.phone.trim()) e.phone = "Please enter your contact number.";
+  else if (!isValidPhone(form.phone))
+    e.phone = "Enter a valid 10-digit phone number.";
+  if (!form.email.trim()) e.email = "Please enter your email address.";
+  else if (!isValidEmail(form.email))
+    e.email = "Enter a valid email address, e.g. name@example.com.";
+  if (!form.address.trim()) e.address = "Please enter your service address.";
+  if (!form.date) e.date = "Please choose a preferred date.";
+  if (!form.time) e.time = "Please choose a preferred time.";
+  return e;
+}
+
 export function QuoteCalculator() {
   const [step, setStep] = useState<Step>("form");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // true only when the send actually failed (offer WhatsApp fallback then);
+  // false for plain validation problems.
+  const [deliveryFailed, setDeliveryFailed] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const submittingRef = useRef(false);
+  const fieldRefs = useRef<
+    Partial<Record<FieldName, HTMLInputElement | HTMLSelectElement | null>>
+  >({});
   // Honeypot anti-spam: real users never see or fill this hidden field; bots do.
   const honeypot = useRef<HTMLInputElement>(null);
 
@@ -115,6 +157,14 @@ export function QuoteCalculator() {
     setSelected((cur) =>
       cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id]
     );
+
+  // Update a field and clear its error the moment the user starts fixing it.
+  const update = (field: keyof typeof form, value: string) => {
+    setForm((f) => ({ ...f, [field]: value }));
+    setFieldErrors((fe) =>
+      fe[field as FieldName] ? { ...fe, [field]: undefined } : fe
+    );
+  };
 
   // Pre-filled WhatsApp booking message (used on the success screen).
   const waMessage = encodeURIComponent(
@@ -147,19 +197,25 @@ export function QuoteCalculator() {
     // Honeypot tripped → it's a bot. Abort silently: no success, no error.
     if (honeypot.current?.value) return;
 
-    if (!isValidPhone(form.phone)) {
-      setError("Please enter a valid 10-digit contact number.");
-      return;
-    }
-
-    if (!isValidEmail(form.email)) {
-      setError("Please enter a valid email address.");
+    // Validate every field; highlight problems and scroll to the first one.
+    const errs = validateForm(form);
+    setFieldErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setDeliveryFailed(false);
+      setError("Please fix the highlighted fields above, then try again.");
+      const first = FIELD_ORDER.find((k) => errs[k]);
+      if (first) {
+        const el = fieldRefs.current[first];
+        el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        el?.focus({ preventScroll: true });
+      }
       return;
     }
 
     submittingRef.current = true;
     setSubmitting(true);
     setError(null);
+    setDeliveryFailed(false);
 
     try {
       if (!site.web3formsAccessKey) {
@@ -200,6 +256,7 @@ export function QuoteCalculator() {
       trackMeta("Lead", { value: total, currency: "CAD" });
       setStep("done");
     } catch {
+      setDeliveryFailed(true);
       setError(
         "Sorry — we couldn't send your booking just now. Please try again, or message us on WhatsApp below."
       );
@@ -226,70 +283,77 @@ export function QuoteCalculator() {
 
           <div className="mt-10">
         {step === "form" && (
-          <form onSubmit={submitBooking} className="space-y-10">
+          <form onSubmit={submitBooking} noValidate className="space-y-10">
             {/* Step 1 — Customer information */}
             <div>
               <StepLabel n={1} title="Your details" />
               <div className="grid gap-4 md:grid-cols-3">
-                <Field label="First name *">
+                <Field label="First name *" error={fieldErrors.firstName}>
                   <input
-                    required
+                    ref={(el) => {
+                      fieldRefs.current.firstName = el;
+                    }}
                     suppressHydrationWarning
+                    aria-invalid={!!fieldErrors.firstName}
                     placeholder="John"
                     value={form.firstName}
-                    onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-                    className="input"
+                    onChange={(e) => update("firstName", e.target.value)}
+                    className={cn("input", fieldErrors.firstName && "input-error")}
                   />
                 </Field>
-                <Field label="Contact number *">
+                <Field label="Contact number *" error={fieldErrors.phone}>
                   <input
-                    required
+                    ref={(el) => {
+                      fieldRefs.current.phone = el;
+                    }}
                     suppressHydrationWarning
                     type="tel"
                     inputMode="tel"
-                    pattern="(?:\+?1[\s.-]?)?\(?[2-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}"
-                    title="Enter a valid 10-digit phone number, for example (416) 555-1234"
-                    placeholder="(416) 555-1234"
+                    aria-invalid={!!fieldErrors.phone}
+                    placeholder="(647) 556-2321"
                     value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="input"
+                    onChange={(e) => update("phone", e.target.value)}
+                    className={cn("input", fieldErrors.phone && "input-error")}
                   />
                 </Field>
                 <div>
-                  <Field label="Email *">
+                  <Field label="Email *" error={fieldErrors.email}>
                     <input
-                      required
+                      ref={(el) => {
+                        fieldRefs.current.email = el;
+                      }}
                       suppressHydrationWarning
                       type="email"
                       inputMode="email"
-                      pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
-                      title="Enter a valid email address, for example name@example.com"
+                      aria-invalid={!!fieldErrors.email}
                       placeholder="you@example.com"
                       value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="input"
+                      onChange={(e) => update("email", e.target.value)}
+                      className={cn("input", fieldErrors.email && "input-error")}
                     />
                   </Field>
                 </div>
                 <div className="md:col-span-3">
-                  <Field label="Address *">
+                  <Field label="Address *" error={fieldErrors.address}>
                     <input
-                      required
+                      ref={(el) => {
+                        fieldRefs.current.address = el;
+                      }}
                       suppressHydrationWarning
+                      aria-invalid={!!fieldErrors.address}
                       placeholder="123 Main St, Toronto"
                       value={form.address}
-                      onChange={(e) => setForm({ ...form, address: e.target.value })}
-                      className="input"
+                      onChange={(e) => update("address", e.target.value)}
+                      className={cn("input", fieldErrors.address && "input-error")}
                     />
                   </Field>
                 </div>
                 <div>
                   <Field label="Province * (sets your package price)">
                     <select
-                      required
                       suppressHydrationWarning
                       value={form.province}
-                      onChange={(e) => setForm({ ...form, province: e.target.value })}
+                      onChange={(e) => update("province", e.target.value)}
                       className="input"
                     >
                       {provinces.map((p) => (
@@ -300,25 +364,31 @@ export function QuoteCalculator() {
                     </select>
                   </Field>
                 </div>
-                <Field label="Preferred date *">
+                <Field label="Preferred date *" error={fieldErrors.date}>
                   <input
-                    required
+                    ref={(el) => {
+                      fieldRefs.current.date = el;
+                    }}
                     suppressHydrationWarning
                     type="date"
                     min={minDate}
+                    aria-invalid={!!fieldErrors.date}
                     value={form.date}
-                    onChange={(e) => setForm({ ...form, date: e.target.value })}
-                    className="input"
+                    onChange={(e) => update("date", e.target.value)}
+                    className={cn("input", fieldErrors.date && "input-error")}
                   />
                 </Field>
-                <Field label="Preferred time *">
+                <Field label="Preferred time *" error={fieldErrors.time}>
                   <input
-                    required
+                    ref={(el) => {
+                      fieldRefs.current.time = el;
+                    }}
                     suppressHydrationWarning
                     type="time"
+                    aria-invalid={!!fieldErrors.time}
                     value={form.time}
-                    onChange={(e) => setForm({ ...form, time: e.target.value })}
-                    className="input"
+                    onChange={(e) => update("time", e.target.value)}
+                    className={cn("input", fieldErrors.time && "input-error")}
                   />
                 </Field>
                 <div className="md:col-span-3">
@@ -328,7 +398,7 @@ export function QuoteCalculator() {
                       suppressHydrationWarning
                       placeholder="e.g. two pets, basement vents, parking notes…"
                       value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      onChange={(e) => update("message", e.target.value)}
                       className="input resize-y"
                     />
                   </Field>
@@ -459,21 +529,24 @@ export function QuoteCalculator() {
             {error && (
               <div
                 role="alert"
+                aria-live="assertive"
                 className="flex flex-col items-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/10 p-5 text-center"
               >
                 <p className="flex items-center gap-2 text-sm font-medium text-red-300">
                   <AlertCircle className="h-5 w-5 shrink-0" />
                   {error}
                 </p>
-                <a
-                  href={waUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-display font-semibold text-white transition-transform hover:-translate-y-0.5"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  Message on WhatsApp
-                </a>
+                {deliveryFailed && (
+                  <a
+                    href={waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-display font-semibold text-white transition-transform hover:-translate-y-0.5"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Message on WhatsApp
+                  </a>
+                )}
               </div>
             )}
 
@@ -553,6 +626,12 @@ export function QuoteCalculator() {
           border-color: var(--color-cyan);
           box-shadow: 0 0 0 3px rgba(11, 87, 194, 0.25);
         }
+        /* Invalid field: red border + soft red ring (kept on focus too). */
+        .input-error,
+        .input-error:focus {
+          border-color: #ef4444;
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.22);
+        }
         /* Force readable option list (fixes white-on-white dropdown on Windows) */
         .input option {
           background-color: #242424;
@@ -577,14 +656,22 @@ function StepLabel({ n, title }: { n: number; title: string }) {
 function Field({
   label,
   children,
+  error,
 }: {
   label: string;
   children: React.ReactNode;
+  error?: string;
 }) {
   return (
     <div>
       <label className="mb-2 block text-sm font-bold text-slate-200">{label}</label>
       {children}
+      {error && (
+        <p className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-red-300">
+          <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+          {error}
+        </p>
+      )}
     </div>
   );
 }

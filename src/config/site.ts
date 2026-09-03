@@ -7,21 +7,22 @@ export const site = {
   tagline: "Clean air. Better health. A better home.",
   description:
     "TrueNorth Duct Cleaning provides professional air duct cleaning, dryer vent cleaning, furnace cleaning, AC cleaning, and filter replacement for homes and businesses across Ontario, Alberta, Quebec, Manitoba, Saskatchewan, and British Columbia. Expect clear pricing, careful technicians, and a cleaner indoor-air system from the first visit.",
-  email: "info@example.com",
-  whatsapp: "(416) 555-1234",
+  email: "truenorthductcleaning318@gmail.com",
+  whatsapp: "(647) 556-2321",
   // WhatsApp number in full international digits (no +, spaces or symbols) for wa.me links.
-  whatsappDigits: "14165551234",
+  whatsappDigits: "16475562321",
   googleRating: 4.9,
   googleReviewCount: 150,
   // Regional contact numbers (one line for all service areas).
   phones: [
-    { region: "All service areas", code: "Call", phone: "(416) 555-1234" },
+    { region: "All service areas", code: "Call", phone: "(647) 556-2321" },
   ],
-  defaultPhone: "(416) 555-1234",
+  defaultPhone: "(647) 556-2321",
 
   // --- Social / marketing (leave "" to hide the icon until provided) ---
-  facebookUrl: "https://www.facebook.com/truenorthductcleaning",
-  instagramUrl: "https://www.instagram.com/truenorthductcleaning",
+  facebookUrl:
+    "https://www.facebook.com/share/19FxxNZXKX/?mibextid=wwXIfr",
+  instagramUrl: "",
 
   // --- Meta Ads tracking ---
   // Meta Pixel / Dataset ID for browser-side Pixel tracking (Events Manager).
@@ -48,7 +49,9 @@ export const site = {
   //   3. Check that inbox for the Access Key, then paste it between the quotes.
   // Until a valid key is set, the booking form shows an error on submit
   // (it never silently "succeeds").
-  web3formsAccessKey: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "",
+  web3formsAccessKey:
+    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ??
+    "c620f8c3-0c40-4ac9-b22b-bbd13f0c2ae3",
 } as const;
 
 export type Service = {

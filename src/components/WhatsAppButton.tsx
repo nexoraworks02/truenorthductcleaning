@@ -15,7 +15,7 @@ export function WhatsAppButton() {
 
   return (
     // Mobile: sits above the mobile CTA bar (bottom-24). Desktop: bottom-6 right-6.
-    <div className="fixed z-40 right-5 bottom-24 lg:right-6 lg:bottom-6">
+    <div className="fixed z-40 bottom-24 right-4 lg:right-6 lg:bottom-6">
       {/* Gentle ball bounce (CSS only, disabled for reduced motion) */}
       <div className="relative motion-safe:animate-[wa-bounce_2.4s_ease-in-out_infinite]">
         {/* Subtle pulse / ripple ring */}
@@ -28,9 +28,9 @@ export function WhatsAppButton() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Message us on WhatsApp"
-          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-2xl ring-1 ring-white/20 transition-transform duration-200 hover:scale-[1.08] active:scale-[0.96]"
+          className="relative flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14 bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-2xl ring-1 ring-white/20 transition-transform duration-200 hover:scale-[1.08] active:scale-[0.96]"
         >
-          <WhatsAppGlyph className="h-8 w-8" />
+          <WhatsAppGlyph className="h-7 w-7 sm:h-8 sm:w-8" />
         </a>
       </div>
     </div>

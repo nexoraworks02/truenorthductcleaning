@@ -252,20 +252,20 @@ export function ResultsShowcase() {
 
             {/* Caption — active item, bottom-left. Non-interactive so the
                 slider still drags underneath it. */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[26] p-6 sm:p-7">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[26] p-4 sm:p-7">
               <div key={active} className="results-fade-up max-w-lg">
                 <span
                   className={cn(
-                    "inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15 backdrop-blur-sm",
+                    "inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15 backdrop-blur-sm sm:h-11 sm:w-11",
                     item.iconAccent
                   )}
                 >
-                  <FeaturedIcon className="h-6 w-6" />
+                  <FeaturedIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                 </span>
-                <h3 className="mt-3.5 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                <h3 className="mt-2.5 font-display text-xl font-extrabold tracking-tight text-white sm:mt-3.5 sm:text-3xl">
                   {item.title}
                 </h3>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-200 sm:text-base">
+                <p className="mt-1.5 max-w-md text-xs leading-relaxed text-slate-200 sm:mt-2 sm:text-base">
                   {item.desc}
                 </p>
               </div>
@@ -297,7 +297,7 @@ export function ResultsShowcase() {
 
             {/* Drag hint — bottom-right, fades once interacted. */}
             {pos > 44 && pos < 56 && !isDragging && (
-              <div className="pointer-events-none absolute bottom-4 right-4 z-30 whitespace-nowrap rounded-full bg-black/55 px-3 py-1 text-[11px] text-white/90 backdrop-blur-sm">
+              <div className="pointer-events-none absolute bottom-3 right-3 z-30 whitespace-nowrap rounded-full bg-black/55 px-2.5 py-1 text-[10px] sm:bottom-4 sm:right-4 sm:px-3 sm:text-[11px] text-white/90 backdrop-blur-sm">
                 ← Drag to compare →
               </div>
             )}
