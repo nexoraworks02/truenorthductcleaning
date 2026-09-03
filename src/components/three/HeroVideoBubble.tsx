@@ -44,11 +44,8 @@ export function HeroVideoBubble({
 
   return (
     <motion.div
-      className={`group absolute overflow-hidden rounded-full border-[3px] border-white/90 shadow-[0_24px_48px_-24px_rgba(2,8,23,0.72)] ${className}`}
-      style={{ width: size, height: size, zIndex: z }}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.88, y: 20 }}
-      animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={`hero-bubble-enter group absolute overflow-hidden rounded-full border-[3px] border-white/90 shadow-[0_24px_48px_-24px_rgba(2,8,23,0.72)] ${className}`}
+      style={{ width: size, height: size, zIndex: z, animationDelay: `${delay}s` }}
       whileHover={
         reduce
           ? undefined

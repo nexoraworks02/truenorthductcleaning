@@ -15,8 +15,12 @@ export function Stats() {
     <section className="bg-canvas">
       <Container className="py-6">
         {/* Dark navy stat panel — icon, big number, uppercase label per column. */}
-        <div className="rounded-3xl bg-gradient-to-b from-[#12365f] to-[#0a2340] p-8 shadow-[0_30px_70px_-34px_rgba(10,35,64,0.65)] sm:p-10">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="relative overflow-hidden rounded-2xl bg-navy p-8 shadow-soft sm:p-10">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(79,155,224,0.16),transparent_55%)]"
+          />
+          <div className="relative grid grid-cols-2 gap-8 md:grid-cols-4">
             {stats.map((s, i) => {
               const Icon = s.icon;
               return (

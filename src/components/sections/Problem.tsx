@@ -23,25 +23,27 @@ const problems = [
 export function Problem() {
   return (
     <Section id="about" className="bg-canvas">
-      <SectionHeading
-        eyebrow="Why it matters"
-        title="What's hiding in your air ducts?"
-        subtitle="Over time, your duct system becomes a reservoir for everything you'd rather not breathe. TrueNorth Duct Cleaning clears it out — for good."
-      />
-      <div className="mt-14 grid gap-6 md:grid-cols-3">
-        {problems.map((p, i) => (
-          <Reveal key={p.title} delay={i * 0.1}>
-            <div className="h-full rounded-lg border border-slate-200 border-b-4 border-b-teal-500 bg-white p-8 shadow-[0_14px_40px_-24px_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-1">
-              <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#0b57c2] text-white shadow-md">
-                <p.icon className="h-6 w-6" />
+      <div className="rounded-[1.75rem] border border-line bg-white p-8 shadow-[0_30px_70px_-40px_rgba(10,35,64,0.45)] sm:p-12 lg:p-16">
+        <SectionHeading
+          eyebrow="Why it matters"
+          title="What's hiding in your air ducts?"
+          subtitle="Over time, your duct system becomes a reservoir for everything you'd rather not breathe. TrueNorth Duct Cleaning clears it out — for good."
+        />
+        <div className="mt-14 grid gap-10 md:grid-cols-3">
+          {problems.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.1} className="text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#eef5fd] text-[#0b57c2] ring-1 ring-[#0b57c2]/10">
+                <p.icon className="h-7 w-7" strokeWidth={1.9} />
               </div>
-              <h3 className="mt-5 font-display text-xl font-extrabold uppercase tracking-tight text-ink">
+              <h3 className="mt-6 font-display text-lg font-extrabold uppercase tracking-tight text-ink">
                 {p.title}
               </h3>
-              <p className="mt-3 leading-relaxed text-ink-soft">{p.body}</p>
-            </div>
-          </Reveal>
-        ))}
+              <p className="mx-auto mt-3 max-w-xs leading-relaxed text-ink-soft">
+                {p.body}
+              </p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </Section>
   );

@@ -6,41 +6,61 @@ import { services } from "@/config/site";
 
 type IconName = keyof typeof Icons;
 
+// The five real services plus a general "Inspection & More" card (6th).
+const cards = [
+  ...services.map((s) => ({
+    name: s.name,
+    short: s.short,
+    icon: s.icon as IconName,
+    href: `/services/${s.slug}`,
+  })),
+  {
+    name: "Inspection & More",
+    short: "We inspect, test and optimize your entire air system.",
+    icon: "ShieldCheck" as IconName,
+    href: "/#quote",
+  },
+];
+
 export function Services() {
   return (
-    <Section id="services" className="bg-white">
-      <SectionHeading
-        eyebrow="Our services"
-        title="Complete air quality care"
-        subtitle="One trusted team for every part of your home's air system."
-      />
-      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((s, i) => {
-          const Icon = (Icons[s.icon as IconName] ||
-            Icons.Wind) as Icons.LucideIcon;
-          return (
-            <Reveal key={s.slug} delay={i * 0.08}>
-              <Link
-                href={`/services/${s.slug}`}
-                className="group flex h-full flex-col rounded-lg border border-slate-200 border-t-4 border-t-slate-200 bg-white p-7 shadow-[0_14px_40px_-26px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-1 hover:border-t-teal-500 hover:shadow-[0_20px_50px_-24px_rgba(0,0,0,0.5)]"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[#0b57c2] text-white shadow-md transition-transform duration-300 group-hover:scale-105">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="mt-5 font-display text-xl font-extrabold uppercase tracking-tight text-ink">
-                  {s.name}
-                </h3>
-                <p className="mt-2 flex-1 leading-relaxed text-ink-soft">
-                  {s.short}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wide text-[#0a3f8f]">
-                  {s.benefit}
-                  <Icons.ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            </Reveal>
-          );
-        })}
+    <Section id="services" className="bg-canvas">
+      <div className="relative overflow-hidden rounded-2xl bg-navy p-8 shadow-soft sm:p-12 lg:p-14">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(79,155,224,0.16),transparent_55%)]"
+        />
+        <div className="relative">
+          <SectionHeading
+            eyebrow="Complete air quality care"
+            title="One trusted team for every part of your home's air system."
+            tone="dark"
+          />
+        </div>
+        <div className="relative mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {cards.map((c, i) => {
+            const Icon = (Icons[c.icon] || Icons.Wind) as Icons.LucideIcon;
+            return (
+              <Reveal key={c.name} delay={i * 0.07}>
+                <Link
+                  href={c.href}
+                  className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[#4f9be0]/40 hover:bg-white/[0.07]"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0b57c2]/20 text-[#4f9be0] ring-1 ring-[#4f9be0]/20">
+                    <Icon className="h-6 w-6" strokeWidth={1.9} />
+                  </div>
+                  <h3 className="mt-4 font-display text-base font-extrabold uppercase tracking-tight text-white">
+                    {c.name}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-300/90">
+                    {c.short}
+                  </p>
+                  <Icons.ArrowRight className="mt-5 h-5 w-5 text-[#4f9be0] transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </Section>
   );

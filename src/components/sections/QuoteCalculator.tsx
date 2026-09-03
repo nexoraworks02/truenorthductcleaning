@@ -210,21 +210,27 @@ export function QuoteCalculator() {
   }
 
   return (
-    <Section id="quote" className="bg-gradient-to-b from-midnight to-navy">
-      <SectionHeading
-        tone="dark"
-        eyebrow="Book online"
-        title="Book Your Duct Cleaning"
-        subtitle="Book your duct cleaning in less than one minute. Choose your package, add optional services, and submit your booking request."
-      />
+    <Section id="quote" className="bg-canvas">
+      <div className="relative overflow-hidden rounded-2xl bg-navy p-6 shadow-soft sm:p-12">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(79,155,224,0.16),transparent_55%)]"
+        />
+        <div className="relative">
+          <SectionHeading
+            tone="dark"
+            eyebrow="Book online"
+            title="Book Your Duct Cleaning"
+            subtitle="Book your duct cleaning in less than one minute. Choose your package, add optional services, and submit your booking request."
+          />
 
-      <div className="mx-auto mt-12 max-w-2xl rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft backdrop-blur-xl sm:p-10">
+          <div className="mt-10">
         {step === "form" && (
           <form onSubmit={submitBooking} className="space-y-10">
             {/* Step 1 — Customer information */}
             <div>
               <StepLabel n={1} title="Your details" />
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 md:grid-cols-3">
                 <Field label="First name *">
                   <input
                     required
@@ -249,7 +255,7 @@ export function QuoteCalculator() {
                     className="input"
                   />
                 </Field>
-                <div className="sm:col-span-2">
+                <div>
                   <Field label="Email *">
                     <input
                       required
@@ -265,7 +271,7 @@ export function QuoteCalculator() {
                     />
                   </Field>
                 </div>
-                <div className="sm:col-span-2">
+                <div className="md:col-span-3">
                   <Field label="Address *">
                     <input
                       required
@@ -277,7 +283,7 @@ export function QuoteCalculator() {
                     />
                   </Field>
                 </div>
-                <div className="sm:col-span-2">
+                <div>
                   <Field label="Province * (sets your package price)">
                     <select
                       required
@@ -288,7 +294,7 @@ export function QuoteCalculator() {
                     >
                       {provinces.map((p) => (
                         <option key={p.code} value={p.code}>
-                          {p.name} — Basic Package ${p.priceFrom}
+                          {p.name} (${p.priceFrom})
                         </option>
                       ))}
                     </select>
@@ -315,7 +321,7 @@ export function QuoteCalculator() {
                     className="input"
                   />
                 </Field>
-                <div className="sm:col-span-2">
+                <div className="md:col-span-3">
                   <Field label="Anything we should know? (optional)">
                     <textarea
                       rows={3}
@@ -369,7 +375,7 @@ export function QuoteCalculator() {
             {/* Step 3 — Optional add-ons */}
             <div>
               <StepLabel n={3} title="Optional add-ons" />
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-2">
                 {ADDONS.map((a) => {
                   const on = selected.includes(a.id);
                   return (
@@ -381,7 +387,7 @@ export function QuoteCalculator() {
                       className={cn(
                         "flex items-center gap-3 rounded-lg border-2 p-4 text-left transition-all hover:-translate-y-0.5",
                         on
-                          ? "border-teal-400 bg-[#eef5fc]0/15"
+                          ? "border-teal-400 bg-teal-400/15"
                           : "border-white/12 bg-white/5 hover:border-white/30"
                       )}
                     >
@@ -389,7 +395,7 @@ export function QuoteCalculator() {
                         className={cn(
                           "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border transition-colors",
                           on
-                            ? "border-teal-400 bg-[#eef5fc]0 text-white"
+                            ? "border-teal-400 bg-[#0b57c2] text-white"
                             : "border-white/25 bg-white/5 text-transparent"
                         )}
                       >
@@ -524,6 +530,8 @@ export function QuoteCalculator() {
             </div>
           </div>
         )}
+          </div>
+        </div>
       </div>
 
       <style>{`
@@ -543,7 +551,7 @@ export function QuoteCalculator() {
         }
         .input:focus {
           border-color: var(--color-cyan);
-          box-shadow: 0 0 0 3px rgba(249,115,22, 0.25);
+          box-shadow: 0 0 0 3px rgba(11, 87, 194, 0.25);
         }
         /* Force readable option list (fixes white-on-white dropdown on Windows) */
         .input option {
@@ -558,7 +566,7 @@ export function QuoteCalculator() {
 function StepLabel({ n, title }: { n: number; title: string }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#eef5fc]0 text-sm font-extrabold text-white">
+      <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#0b57c2] text-sm font-extrabold text-white">
         {n}
       </span>
       <h3 className="font-display text-lg font-extrabold uppercase tracking-tight text-white">{title}</h3>
@@ -580,3 +588,4 @@ function Field({
     </div>
   );
 }
+

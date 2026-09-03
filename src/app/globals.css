@@ -171,26 +171,94 @@ h3 {
 /* Hero circular-image collage. Sizes and positions live on one wrapper so the
    three circles move as a single editorial cluster across desktop heights. */
 .hero-media-cluster {
-  --hero-circle-top: clamp(196px, 15vw, 210px);
-  --hero-circle-main: clamp(232px, 18vw, 252px);
-  --hero-circle-bottom: clamp(212px, 16.5vw, 230px);
+  --hero-circle-top: clamp(198px, 14vw, 238px);
+  --hero-circle-main: clamp(228px, 17vw, 286px);
+  --hero-circle-bottom: clamp(214px, 15.5vw, 260px);
   position: relative;
-  width: min(100%, 640px);
-  height: clamp(500px, 42vw, 582px);
+  width: min(112%, 660px);
+  height: clamp(560px, 48vw, 660px);
   margin-left: auto;
-  transform: translateY(-14px);
+  margin-right: clamp(-72px, -4vw, -24px);
+  transform: translateY(-8px);
 }
 .hero-circle-top {
-  right: clamp(120px, 13vw, 180px);
-  top: clamp(16px, 3vw, 26px);
+  right: clamp(18px, 3vw, 54px);
+  top: clamp(0px, 1vw, 8px);
 }
 .hero-circle-main {
-  left: clamp(16px, 2.5vw, 32px);
-  top: clamp(150px, 13vw, 172px);
+  left: clamp(280px, 24vw, 340px);
+  top: clamp(178px, 15vw, 210px);
 }
 .hero-circle-bottom {
-  right: clamp(96px, 10vw, 132px);
-  bottom: clamp(14px, 2vw, 22px);
+  right: clamp(10px, 2vw, 36px);
+  bottom: clamp(0px, 1vw, 10px);
+}
+
+/* Reliable CSS fade-in for the hero circles (compositor-driven, so it always
+   completes even if the JS animation loop is throttled). */
+@keyframes hero-bubble-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.hero-bubble-enter {
+  opacity: 0;
+  animation: hero-bubble-fade 0.7s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bubble-enter {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Hide the scrollbar on horizontal snap carousels (mobile results previews). */
+.hero-noscrollbar {
+  scrollbar-width: none;
+}
+.hero-noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Featured-showcase text entrance (compositor-driven, always completes). */
+@keyframes results-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.results-fade-up {
+  animation: results-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .results-fade-up {
+    animation: none;
+  }
+}
+
+/* Cross-fade the slider imagery when the active before/after pair changes. */
+@keyframes results-img-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.results-img-fade {
+  animation: results-img-fade 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .results-img-fade {
+    animation: none;
+  }
 }
 
 .hero-mobile-media-cluster {
@@ -214,14 +282,14 @@ h3 {
 
 @media (min-width: 1024px) and (max-height: 700px) {
   .hero-media-cluster {
-    --hero-circle-top: clamp(172px, 13vw, 200px);
-    --hero-circle-main: clamp(206px, 15.5vw, 238px);
-    --hero-circle-bottom: clamp(188px, 14vw, 218px);
-    height: clamp(430px, 34vw, 480px);
+    --hero-circle-top: clamp(172px, 13vw, 206px);
+    --hero-circle-main: clamp(210px, 15.5vw, 246px);
+    --hero-circle-bottom: clamp(190px, 14vw, 224px);
+    height: clamp(454px, 36vw, 506px);
     transform: translateY(-8px);
   }
   .hero-circle-main {
-    top: clamp(118px, 11vw, 144px);
+    top: clamp(140px, 12vw, 166px);
   }
 }
 
@@ -292,3 +360,4 @@ h3 {
     animation: none;
   }
 }
+

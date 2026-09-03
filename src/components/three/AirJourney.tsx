@@ -68,7 +68,7 @@ export function AirJourney() {
       {/* --- Full-bleed background video + cinematic treatment --- */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
         <motion.video
-          className="absolute inset-0 h-full w-full scale-105 object-cover blur-[6px]"
+          className="absolute inset-0 h-full w-full scale-105 object-cover blur-[2px]"
           style={{ scale: bgScale }}
           src={HERO_BG_VIDEO}
           poster="/images/technician.jpg"
@@ -78,12 +78,12 @@ export function AirJourney() {
           playsInline
           preload="metadata"
         />
-        {/* Dark wash for overall legibility. */}
-        <div className="absolute inset-0 bg-navy/55" />
+        {/* Light wash for overall legibility. */}
+        <div className="absolute inset-0 bg-navy/30" />
         {/* Stronger ink on the LEFT behind the text, footage more visible right. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/60 to-navy/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/40 to-navy/5" />
         {/* Subtle vignette. */}
-        <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_45%,transparent_52%,rgba(6,18,36,0.72)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_45%,transparent_58%,rgba(6,18,36,0.5)_100%)]" />
       </div>
 
       {/* Restrained dotted decoration near the collage (desktop only). */}
@@ -92,7 +92,7 @@ export function AirJourney() {
         className="hero-dots pointer-events-none absolute right-[6%] top-[16%] hidden h-40 w-40 text-white/40 opacity-[0.14] lg:block"
       />
 
-      <Container className="grid min-h-[inherit] items-center gap-8 pt-24 pb-12 sm:pt-28 sm:pb-14 lg:grid-cols-[minmax(0,47%)_minmax(0,53%)] lg:gap-8">
+      <Container className="grid min-h-[inherit] items-center gap-8 pt-28 pb-12 sm:pt-32 sm:pb-14 lg:grid-cols-[minmax(0,45%)_minmax(0,55%)] lg:gap-4">
         {/* ------------------------------- LEFT: the offer ------------------------------- */}
         <motion.div style={{ y: contentY }} className="max-w-xl">
           <motion.span
@@ -136,7 +136,7 @@ export function AirJourney() {
           >
             {services.map((s) => (
               <li key={s.slug} className="flex items-center gap-2.5 text-sm text-white/90">
-                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#dc2626] text-white shadow-sm shadow-[#dc2626]/30">
+                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0b57c2] text-white shadow-sm shadow-[#0b57c2]/30">
                   <Check className="h-3 w-3" strokeWidth={3} />
                 </span>
                 {s.name}
@@ -150,7 +150,7 @@ export function AirJourney() {
             transition={{ duration: 0.6, delay: 0.32 }}
             className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <Button href="/#quote" size="lg" variant="cta">
+            <Button href="/#quote" size="lg">
               Get Free Quote
             </Button>
             <a
@@ -234,3 +234,4 @@ export function AirJourney() {
     </section>
   );
 }
+

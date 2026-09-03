@@ -12,7 +12,7 @@ export function FinalCTA() {
     <section className="py-24 sm:py-32">
       <Container>
         <div className="relative overflow-hidden rounded-2xl bg-navy px-8 py-20 text-center shadow-soft sm:px-16">
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(234,124,0,0.24),transparent_55%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(79,155,224,0.16),transparent_55%)]" />
           <div className="relative">
             <h2 className="font-display text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">
               Ready to breathe cleaner air?

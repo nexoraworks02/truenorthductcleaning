@@ -34,7 +34,7 @@ export function Navbar() {
           : "bg-transparent"
       )}
     >
-      <Container className="relative z-10 flex h-20 max-w-7xl items-center justify-between">
+      <Container className="relative z-10 flex h-20 max-w-7xl items-center justify-between lg:h-24">
         <Link href="/" aria-label={site.name}>
           <Logo light={!solid} />
         </Link>
@@ -128,3 +128,4 @@ export function Navbar() {
     </header>
   );
 }
+

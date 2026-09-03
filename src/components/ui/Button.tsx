@@ -11,9 +11,9 @@ const variants: Record<Variant, string> = {
   // Solid royal-blue with a chunky bottom edge — works on light or navy.
   primary:
     "btn-primary bg-[#0b57c2] text-white shadow-none hover:bg-[#0a3f8f] hover:-translate-y-0.5",
-  // Red conversion accent — used for the primary hero CTA.
+  // Strong conversion accent — matches the blue hero treatment.
   cta:
-    "btn-primary bg-[#dc2626] text-white shadow-none hover:bg-[#b91c1c] hover:-translate-y-0.5",
+    "btn-primary bg-[#0b57c2] text-white shadow-none hover:bg-[#0a3f8f] hover:-translate-y-0.5",
   // Light-default outline. On navy bands pass an override className (see usages).
   secondary:
     "bg-[#0b57c2]/10 text-[#0a3f8f] border border-[#0b57c2]/15 hover:bg-[#0b57c2] hover:text-white",
@@ -65,3 +65,4 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
 // Utility for a secondary button placed on a navy/dark band.
 export const onDarkSecondary =
   "!bg-transparent !text-white !border-white/40 hover:!bg-white/10 hover:!border-white";
+

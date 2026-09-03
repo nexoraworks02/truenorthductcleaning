@@ -15,10 +15,10 @@ export function Fleet() {
     <Section className="bg-white">
       <div className="grid items-center gap-10 lg:grid-cols-2">
         <Reveal>
-          <div className="mx-auto aspect-[4/3] w-full max-w-[560px] overflow-hidden rounded-lg border-2 border-slate-200 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.5)]">
+          <div className="mx-auto aspect-[16/11] w-full max-w-[620px] overflow-hidden rounded-lg border-2 border-slate-200 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.5)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/van.jpg"
+              src="/images/truenorth-service-van.png"
               alt="TrueNorth Duct Cleaning branded service van outside a home"
               className="h-full w-full object-cover"
               loading="lazy"
@@ -78,3 +78,4 @@ export function Fleet() {
     </Section>
   );
 }
+

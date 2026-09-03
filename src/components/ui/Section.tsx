@@ -50,7 +50,7 @@ export function SectionHeading({
           <span
             className={cn(
               "h-px w-6",
-              dark ? "bg-teal-300/70" : "bg-[#eef5fc]0/60"
+              dark ? "bg-teal-300/70" : "bg-[#0b57c2]/60"
             )}
           />
           {eyebrow}
