@@ -201,38 +201,46 @@ export function ProvinceLanding({ page }: { page: ProvincePage }) {
           eyebrow="Where we work"
           title={`Cities we serve in ${page.name}`}
         />
-        <div className="mx-auto mt-12 max-w-4xl">
-          {activeCities.length > 0 && (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {activeCities.map((c, i) => (
-                <Reveal key={c.citySlug} delay={(i % 3) * 0.08}>
-                  <Link
-                    href={cityPath(c)}
-                    className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-all hover:-translate-y-1 hover:border-teal-400/40"
-                  >
-                    <span className="flex items-center gap-3">
-                      <MapPin className="h-5 w-5 text-teal-500" />
-                      <span className="font-display font-semibold text-ink">
-                        {c.city}
-                      </span>
+        <div className="mx-auto mt-12 max-w-5xl">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Cities with dedicated landing pages link to them. */}
+            {activeCities.map((c, i) => (
+              <Reveal key={c.citySlug} delay={(i % 3) * 0.06}>
+                <Link
+                  href={cityPath(c)}
+                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-all hover:-translate-y-1 hover:border-teal-400/40"
+                >
+                  <span className="flex items-center gap-3">
+                    <MapPin className="h-5 w-5 text-teal-500" />
+                    <span className="font-display font-semibold text-ink">
+                      {c.city}
                     </span>
-                    <ArrowRight className="h-4 w-4 text-teal-400 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          )}
-          {page.moreCities.length > 0 && (
-            <Reveal delay={0.2}>
-              <p className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-sm leading-relaxed text-slate-400">
-                <span className="font-semibold text-slate-300">
-                  Also serving:
-                </span>{" "}
-                {page.moreCities.join(" · ")} — and communities across{" "}
-                {page.name}.
-              </p>
-            </Reveal>
-          )}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-teal-400 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Reveal>
+            ))}
+            {/* Other served cities → straight to the booking form. */}
+            {page.moreCities.map((city, i) => (
+              <Reveal key={city} delay={((activeCities.length + i) % 3) * 0.06}>
+                <Link
+                  href="/#quote"
+                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-all hover:-translate-y-1 hover:border-teal-400/40"
+                >
+                  <span className="flex items-center gap-3">
+                    <MapPin className="h-5 w-5 text-teal-500" />
+                    <span className="font-display font-semibold text-ink">
+                      {city}
+                    </span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-teal-400 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-sm text-slate-400">
+            …and surrounding communities across {page.name}.
+          </p>
         </div>
       </Section>
 
