@@ -133,23 +133,27 @@ export function ProvinceLanding({ page }: { page: ProvincePage }) {
                   </span>
                 </div>
                 <h3 className="mb-3 mt-6 border-t border-white/10 pt-6 font-semibold text-white">
-                  Services in {page.name}:
+                  Add-ons available in {page.name}:
                 </h3>
                 <ul className="space-y-3">
-                  {services.map((s) => (
-                    <li key={s.slug}>
-                      <Link
-                        href={`/services/${s.slug}`}
-                        className="group flex items-start gap-3 text-sm text-slate-300 transition-colors hover:text-white"
-                      >
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
-                        <span className="group-hover:underline">{s.name}</span>
-                      </Link>
-                    </li>
-                  ))}
+                  {/* Air duct cleaning is already the base package — the list
+                      below is the optional add-ons customers can include. */}
+                  {services
+                    .filter((s) => s.slug !== "air-duct-cleaning")
+                    .map((s) => (
+                      <li key={s.slug}>
+                        <Link
+                          href={`/services/${s.slug}`}
+                          className="group flex items-start gap-3 text-sm text-slate-300 transition-colors hover:text-white"
+                        >
+                          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
+                          <span className="group-hover:underline">{s.name}</span>
+                        </Link>
+                      </li>
+                    ))}
                   <li className="flex items-start gap-3 text-sm text-slate-300">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
-                    Residential &amp; commercial duct cleaning
+                    Brush Cleaning
                   </li>
                 </ul>
               </div>

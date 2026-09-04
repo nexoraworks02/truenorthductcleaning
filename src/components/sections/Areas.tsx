@@ -30,7 +30,7 @@ export function Areas() {
                     {p.name}
                   </p>
                   <p className="text-sm font-semibold text-[#0a3f8f]">
-                    from ${p.priceFrom} · view cities
+                    View cities
                   </p>
                 </div>
               </div>

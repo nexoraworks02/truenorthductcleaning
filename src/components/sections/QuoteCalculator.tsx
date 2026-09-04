@@ -63,13 +63,24 @@ function formatDate(d: string) {
   });
 }
 
-function formatTime(t: string) {
+// A booking is a 2-hour arrival window. Picking a start time shows the full
+// window, e.g. "4:00 PM" → "4:00 PM – 6:00 PM".
+function formatTimeWindow(t: string) {
   if (!t) return "—";
   const [h, m] = t.split(":").map(Number);
-  const am = h < 12;
-  const h12 = h % 12 === 0 ? 12 : h % 12;
-  return `${h12}:${String(m).padStart(2, "0")} ${am ? "AM" : "PM"}`;
+  const fmt = (hh: number) => {
+    const am = hh < 12;
+    const h12 = hh % 12 === 0 ? 12 : hh % 12;
+    return `${h12}:${String(m).padStart(2, "0")} ${am ? "AM" : "PM"}`;
+  };
+  return `${fmt(h)} – ${fmt((h + 2) % 24)}`;
 }
+
+// Selectable arrival windows: 8:00 AM start through 6:00 PM start.
+const TIME_SLOTS = Array.from({ length: 11 }, (_, i) => {
+  const value = `${String(8 + i).padStart(2, "0")}:00`;
+  return { value, label: formatTimeWindow(value) };
+});
 
 function isValidPhone(phone: string) {
   const digits = phone.replace(/\D/g, "");
@@ -177,7 +188,7 @@ export function QuoteCalculator() {
       `Phone: ${form.phone}`,
       `Email: ${form.email}`,
       `Preferred Date: ${formatDate(form.date)}`,
-      `Preferred Time: ${formatTime(form.time)}`,
+      `Preferred Time: ${formatTimeWindow(form.time)}`,
       "",
       `Package: Basic Package ($${basePrice})`,
       selectedAddons.length ? "Add-ons:" : "Add-ons: None",
@@ -242,7 +253,7 @@ export function QuoteCalculator() {
           email: form.email,
           message: form.message || "None",
           preferredDate: formatDate(form.date),
-          preferredTime: formatTime(form.time),
+          preferredTime: formatTimeWindow(form.time),
           packageName: `Basic Package ($${basePrice})`,
           addons: selectedAddons.map((a) => a.label).join(", ") || "None",
           total: `$${total}`,
@@ -378,18 +389,28 @@ export function QuoteCalculator() {
                     className={cn("input", fieldErrors.date && "input-error")}
                   />
                 </Field>
-                <Field label="Preferred time *" error={fieldErrors.time}>
-                  <input
+                <Field label="Preferred arrival time *" error={fieldErrors.time}>
+                  <select
                     ref={(el) => {
                       fieldRefs.current.time = el;
                     }}
                     suppressHydrationWarning
-                    type="time"
                     aria-invalid={!!fieldErrors.time}
                     value={form.time}
                     onChange={(e) => update("time", e.target.value)}
                     className={cn("input", fieldErrors.time && "input-error")}
-                  />
+                  >
+                    <option value="">Select a 2-hour window</option>
+                    {TIME_SLOTS.map((s) => (
+                      <option key={s.value} value={s.value}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="mt-1.5 text-xs text-slate-400">
+                    Each visit takes about 2 hours — we arrive within your
+                    chosen window.
+                  </p>
                 </Field>
                 <div className="md:col-span-3">
                   <Field label="Anything we should know? (optional)">
