@@ -70,10 +70,6 @@ export const packageIncludes: PackageItem[] = [
     desc: "Cleaning of all accessible air ducts throughout the home.",
   },
   { title: "Hot & Cold Air Vent Cleaning" },
-  {
-    title: "One Dryer Vent Cleaning",
-    desc: "Removal of lint and debris to help improve dryer performance and safety.",
-  },
   { title: "J-Panel Cleaning" },
   {
     title: "Duct Sanitization Treatment",
