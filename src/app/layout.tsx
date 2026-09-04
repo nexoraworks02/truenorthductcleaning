@@ -9,6 +9,7 @@ import { MobileCTABar } from "@/components/MobileCTABar";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { MetaPixel } from "@/components/MetaPixel";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ImageProtect } from "@/components/ImageProtect";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -125,6 +126,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <MetaPixel />
+        <ImageProtect />
         <ScrollProgress />
         <Navbar />
         {children}
