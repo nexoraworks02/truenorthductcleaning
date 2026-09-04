@@ -36,12 +36,12 @@ export default function Home() {
       <Stats />
       <Problem />
       <Services />
+      <Areas />
       <BeforeAfter />
       <HowItWorks />
       <Fleet />
       <QuoteCalculator />
       <Reviews />
-      <Areas />
       <FAQ />
       <FinalCTA />
     </main>
