@@ -5,16 +5,7 @@ import { Check } from "lucide-react";
 import { Section, SectionHeading } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
-import { provinces } from "@/config/site";
-
-const included = [
-  "Unlimited Ducts Cleaned",
-  "Unlimited Vents Cleaned",
-  "Natural Sanitizer",
-  "Free Furnace Inspection",
-  "Free AC Inspection",
-  "Free Dryer Vent Inspection",
-];
+import { provinces, packageIncludes, packageNote } from "@/config/site";
 
 const addons = [
   { label: "Furnace Cleaning", price: 100 },
@@ -79,13 +70,19 @@ export function Pricing() {
               </span>
             </div>
             <ul className="mt-6 flex-1 space-y-3">
-              {included.map((item) => (
-                <li key={item} className="flex items-start gap-3">
+              {packageIncludes.map((item) => (
+                <li key={item.title} className="flex items-start gap-3">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#0b57c2]" />
-                  <span className="text-ink-soft">{item}</span>
+                  <span className="text-sm text-ink-soft">
+                    <span className="font-semibold text-ink">{item.title}</span>
+                    {item.desc && <span> — {item.desc}</span>}
+                  </span>
                 </li>
               ))}
             </ul>
+            <p className="mt-4 rounded-lg bg-[#eef5fc] px-3 py-2 text-xs text-ink-soft">
+              <span className="font-semibold text-ink">Note:</span> {packageNote}
+            </p>
             <Button href="/#quote" size="lg" className="mt-8 w-full">
               Book Appointment
             </Button>

@@ -17,21 +17,11 @@ import {
 } from "lucide-react";
 import { Section, SectionHeading } from "../ui/Section";
 import { Button, onDarkSecondary } from "../ui/Button";
-import { site, provinces } from "@/config/site";
+import { site, provinces, packageIncludes, packageNote } from "@/config/site";
 import { trackMeta } from "../MetaPixel";
 import { cn } from "@/lib/utils";
 
 /* ---------------- Offer: one package (price varies by province) + add-ons ---------------- */
-
-const PACKAGE_INCLUDES = [
-  "Unlimited Ducts Cleaned",
-  "Unlimited Vents Cleaned",
-  "Natural Disinfectant Sanitizer",
-  "Safe Around Children & Pets",
-  "Free Furnace Inspection",
-  "Free AC Inspection",
-  "Free Dryer Vent Inspection",
-];
 
 type Addon = { id: string; label: string; price: number };
 const ADDONS: Addon[] = [
@@ -452,14 +442,28 @@ export function QuoteCalculator() {
                     </p>
                   </div>
                 </div>
-                <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-                  {PACKAGE_INCLUDES.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-slate-100">
+                <p className="mt-5 text-xs font-bold uppercase tracking-wide text-teal-300">
+                  Your package includes
+                </p>
+                <ul className="mt-3 space-y-2.5">
+                  {packageIncludes.map((item) => (
+                    <li key={item.title} className="flex items-start gap-2.5 text-sm">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-teal-300" />
-                      {item}
+                      <span className="text-slate-100">
+                        <span className="font-semibold text-white">
+                          {item.title}
+                        </span>
+                        {item.desc && (
+                          <span className="text-slate-300"> — {item.desc}</span>
+                        )}
+                      </span>
                     </li>
                   ))}
                 </ul>
+                <p className="mt-4 rounded-lg bg-white/5 px-3 py-2 text-xs text-slate-300">
+                  <span className="font-semibold text-white">Note:</span>{" "}
+                  {packageNote}
+                </p>
               </div>
             </div>
 

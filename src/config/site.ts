@@ -61,6 +61,31 @@ export const site = {
     "c620f8c3-0c40-4ac9-b22b-bbd13f0c2ae3",
 } as const;
 
+// What every Basic Package includes — single source of truth used by the
+// booking form, city pages, and the pricing card so they never drift.
+export type PackageItem = { title: string; desc?: string };
+export const packageIncludes: PackageItem[] = [
+  {
+    title: "Complete Air Duct Cleaning",
+    desc: "Cleaning of all accessible air ducts throughout the home.",
+  },
+  { title: "Hot & Cold Air Vent Cleaning" },
+  {
+    title: "One Dryer Vent Cleaning",
+    desc: "Removal of lint and debris to help improve dryer performance and safety.",
+  },
+  { title: "J-Panel Cleaning" },
+  {
+    title: "Duct Sanitization Treatment",
+    desc: "A natural disinfectant sanitizer is applied to the main duct line. Safe for children, pets, and food-preparation areas.",
+  },
+  {
+    title: "FREE HVAC System Inspection",
+    desc: "Complimentary inspection of the furnace, main duct lines, and AC system.",
+  },
+];
+export const packageNote = "No extra tax on cash payments after the work.";
+
 export type Service = {
   slug: string;
   name: string;

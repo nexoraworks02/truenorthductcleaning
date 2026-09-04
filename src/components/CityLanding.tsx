@@ -11,21 +11,12 @@ import {
 } from "lucide-react";
 import type { CityPage } from "@/config/cities";
 import { cityPages, cityPath, provinceSlugOf } from "@/config/cities";
-import { site, provinces } from "@/config/site";
+import { site, provinces, packageIncludes, packageNote } from "@/config/site";
 import { Container } from "@/components/ui/Container";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button, onDarkSecondary } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ServiceFAQ } from "@/components/ServiceFAQ";
-
-const INCLUDED = [
-  "All air ducts & vents cleaned",
-  "Natural disinfectant sanitizer",
-  "Furnace, AC & dryer vent inspection",
-  "Before & after photos",
-  "No hidden fees — price confirmed upfront",
-  "100% satisfaction guarantee",
-];
 
 export function CityLanding({ page }: { page: CityPage }) {
   const cityPrice =
@@ -141,14 +132,29 @@ export function CityLanding({ page }: { page: CityPage }) {
                     Basic Package · taxes included
                   </span>
                 </div>
-                <ul className="mt-6 space-y-3">
-                  {INCLUDED.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-slate-300">
+                <p className="mt-6 text-xs font-bold uppercase tracking-wide text-teal-400">
+                  Your package includes
+                </p>
+                <ul className="mt-3 space-y-3">
+                  {packageIncludes.map((item) => (
+                    <li
+                      key={item.title}
+                      className="flex items-start gap-3 text-sm"
+                    >
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
-                      {item}
+                      <span className="text-slate-300">
+                        <span className="font-semibold text-white">
+                          {item.title}
+                        </span>
+                        {item.desc && <span> — {item.desc}</span>}
+                      </span>
                     </li>
                   ))}
                 </ul>
+                <p className="mt-4 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">
+                  <span className="font-semibold text-white">Note:</span>{" "}
+                  {packageNote}
+                </p>
               </div>
             </Reveal>
           </div>
