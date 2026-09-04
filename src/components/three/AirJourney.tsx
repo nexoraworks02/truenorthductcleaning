@@ -68,10 +68,9 @@ export function AirJourney() {
       {/* --- Full-bleed background video + cinematic treatment --- */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
         <motion.video
-          className="absolute inset-0 h-full w-full scale-105 object-cover blur-[2px]"
+          className="absolute inset-0 h-full w-full scale-105 bg-navy object-cover blur-[2px]"
           style={{ scale: bgScale }}
           src={HERO_BG_VIDEO}
-          poster="/images/technician.jpg"
           autoPlay
           muted
           loop
