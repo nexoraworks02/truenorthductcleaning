@@ -24,7 +24,7 @@ export const site = {
   // --- Social / marketing (leave "" to hide the icon until provided) ---
   facebookUrl:
     "https://www.facebook.com/share/19FxxNZXKX/?mibextid=wwXIfr",
-  instagramUrl: "",
+  instagramUrl: "https://www.instagram.com/truenorth2060",
 
   // --- Meta Pixel (Facebook/Instagram Ads tracking) ---
   // Get it from Meta Events Manager → Data sources → your pixel (a numeric id
