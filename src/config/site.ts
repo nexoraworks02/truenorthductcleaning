@@ -3,7 +3,9 @@
 
 export const site = {
   name: "TrueNorth Duct Cleaning",
-  url: "https://www.example.com",
+  // Canonical site URL (apex, no www). Powers sitemap.xml, robots.txt,
+  // canonical tags, Open Graph/social links, and JSON-LD structured data.
+  url: "https://truenorthductcleaning.com",
   tagline: "Clean air. Better health. A better home.",
   description:
     "TrueNorth Duct Cleaning provides professional air duct cleaning, dryer vent cleaning, furnace cleaning, AC cleaning, and filter replacement for homes and businesses across Ontario, Alberta, Quebec, Manitoba, Saskatchewan, and British Columbia. Expect clear pricing, careful technicians, and a cleaner indoor-air system from the first visit.",
@@ -24,16 +26,21 @@ export const site = {
     "https://www.facebook.com/share/19FxxNZXKX/?mibextid=wwXIfr",
   instagramUrl: "",
 
-  // --- Meta Ads tracking ---
-  // Meta Pixel / Dataset ID for browser-side Pixel tracking (Events Manager).
-  // Set NEXT_PUBLIC_META_PIXEL_ID in your environment. While empty, the Pixel
-  // simply doesn't load (no errors). Never use a fake id.
+  // --- Meta Pixel (Facebook/Instagram Ads tracking) ---
+  // Get it from Meta Events Manager → Data sources → your pixel (a numeric id
+  // like 1234567890). Two ways to set it, pick either:
+  //   • Vercel env var  NEXT_PUBLIC_META_PIXEL_ID  (preferred), or
+  //   • paste the id inside the quotes on the fallback line below.
+  // While empty, the Pixel simply doesn't load (no errors). Never use a fake id.
   metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "",
 
   // --- Google Analytics 4 ---
-  // GA4 Measurement ID (analytics.google.com -> Admin -> Data streams).
+  // GA4 Measurement ID (analytics.google.com → Admin → Data streams → a
+  // "G-XXXXXXXXXX" id). Set it the same two ways:
+  //   • Vercel env var  NEXT_PUBLIC_GA_MEASUREMENT_ID  (preferred), or
+  //   • paste the id inside the quotes on the fallback line below.
   // While empty, GA simply doesn't load (no errors). Never use a fake id.
-  gaMeasurementId: "",
+  gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "",
 
   // --- Google Search Console ---
   // Set this to Google's HTML tag verification content value.
@@ -125,6 +132,5 @@ export const nav = [
   { label: "About", href: "/#about" },
   { label: "Services", href: "/#services" },
   { label: "Portfolio", href: "/#results" },
-  { label: "Pricing", href: "/#pricing" },
   { label: "Contact", href: "/#quote" },
 ];
