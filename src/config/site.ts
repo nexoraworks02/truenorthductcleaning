@@ -153,5 +153,6 @@ export const nav = [
   { label: "About", href: "/#about" },
   { label: "Services", href: "/#services" },
   { label: "Portfolio", href: "/#results" },
+  { label: "Testimonials", href: "/#reviews" },
   { label: "Contact", href: "/#quote" },
 ];
